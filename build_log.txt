@@ -1,0 +1,435 @@
+﻿Γû▓ Next.js 16.2.2 (Turbopack)
+- Environments: .env
+
+node.exe : ΓÜá The 
+"middleware" file 
+convention is deprecated. 
+Please use "proxy" 
+instead. Learn more: https
+://nextjs.org/docs/message
+s/middleware-to-proxy
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:
+\Users\User\AppData\Roamin
+g\n ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (Γ  
+  Üá The "middle...lewa   
+ re-to-proxy:String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build 
+failed with 6 errors:
+./src/lib/actions.ts:5:1
+You're importing a module 
+that depends on 
+"next/headers". This API 
+is only available in 
+Server Components in the 
+App Router, but you are 
+using it in the Pages 
+Router.
+    Learn more: https://ne
+xtjs.org/docs/app/building
+-your-application/renderin
+g/server-components
+  [90m3 |[0m 
+[36mimport[0m { desc, 
+eq, and, count } 
+[36mfrom[0m 
+[32m"drizzle-orm"[0m;
+  [90m4 |[0m 
+[36mimport[0m { auth } 
+[36mfrom[0m 
+[32m"./auth"[0m;
+[31m[1m>[0m [90m5 
+|[0m [36mimport[0m { 
+headers } [36mfrom[0m 
+[32m"next/headers"[0m;
+  [90m  |[0m [31m[1m^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^[0m
+  [90m6 |[0m 
+[36mimport[0m { 
+revalidatePath } 
+[36mfrom[0m 
+[32m"next/cache"[0m;
+  [90m7 |[0m
+  [90m8 |[0m 
+[36mexport[0m 
+[36masync[0m 
+[36mfunction[0m 
+getFeaturedEvents() {
+
+Ecmascript file had an 
+error
+
+Import traces:
+  Server Component:
+    ./src/lib/actions.ts
+    
+./src/app/user/page.tsx
+
+  Client Component 
+Browser:
+    ./src/lib/actions.ts 
+[Client Component Browser]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component Browser]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./src/lib/actions.ts 
+[Client Component SSR]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component SSR]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+
+./src/lib/actions.ts:6:10
+You're importing a module 
+that depends on 
+"revalidatePath". This 
+API is only available in 
+Server Components in the 
+App Router, but you are 
+using it in the Pages 
+Router.
+    Learn more: https://ne
+xtjs.org/docs/app/building
+-your-application/renderin
+g/server-components
+  [90m4 |[0m 
+[36mimport[0m { auth } 
+[36mfrom[0m 
+[32m"./auth"[0m;
+  [90m5 |[0m 
+[36mimport[0m { headers 
+} [36mfrom[0m 
+[32m"next/headers"[0m;
+[31m[1m>[0m [90m6 
+|[0m [36mimport[0m { 
+revalidatePath } 
+[36mfrom[0m 
+[32m"next/cache"[0m;
+  [90m  |[0m          [
+31m[1m^^^^^^^^^^^^^^[0m
+  [90m7 |[0m
+  [90m8 |[0m 
+[36mexport[0m 
+[36masync[0m 
+[36mfunction[0m 
+getFeaturedEvents() {
+  [90m9 |[0m     
+[36mtry[0m {
+
+Ecmascript file had an 
+error
+
+Import traces:
+  Server Component:
+    ./src/lib/actions.ts
+    
+./src/app/user/page.tsx
+
+  Client Component 
+Browser:
+    ./src/lib/actions.ts 
+[Client Component Browser]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component Browser]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+  Client Component SSR:
+    ./src/lib/actions.ts 
+[Client Component SSR]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component SSR]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+
+./node_modules/postgres/sr
+c/index.js:2:1
+Module not found: Can't 
+resolve 'fs'
+  [90m1 |[0m 
+[36mimport[0m os 
+[36mfrom[0m 
+[32m'os'[0m
+[31m[1m>[0m [90m2 
+|[0m [36mimport[0m fs 
+[36mfrom[0m 
+[32m'fs'[0m
+  [90m  |[0m [31m[1m^^
+^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m
+  [90m4 |[0m 
+[36mimport[0m {
+  [90m5 |[0m   
+mergeUserTypes,
+
+
+
+Import traces:
+  externals-tracing:
+    ./node_modules/postgre
+s/src/index.js 
+[externals-tracing]
+    [externals]/postgres 
+[external]
+    ./src/db/index.ts 
+[App Route]
+    ./src/lib/auth.ts 
+[App Route]
+    ./src/app/api/auth/[..
+.better-auth]/route.ts 
+[App Route]
+
+  Client Component 
+Browser:
+    ./node_modules/postgre
+s/src/index.js [Client 
+Component Browser]
+    ./src/db/index.ts 
+[Client Component Browser]
+    ./src/lib/actions.ts 
+[Client Component Browser]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component Browser]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/me
+ssages/module-not-found
+
+
+./node_modules/postgres/sr
+c/connection.js:1:1
+Module not found: Can't 
+resolve 'net'
+[31m[1m>[0m [90m1 
+|[0m [36mimport[0m net 
+[36mfrom[0m 
+[32m'net'[0m
+  [90m  |[0m [31m[1m^^
+^^^^^^^^^^^^^^^^^^^[0m
+  [90m2 |[0m 
+[36mimport[0m tls 
+[36mfrom[0m 
+[32m'tls'[0m
+  [90m3 |[0m 
+[36mimport[0m crypto 
+[36mfrom[0m 
+[32m'crypto'[0m
+  [90m4 |[0m 
+[36mimport[0m 
+[33mStream[0m 
+[36mfrom[0m 
+[32m'stream'[0m
+
+
+
+Import trace:
+  Client Component 
+Browser:
+    ./node_modules/postgre
+s/src/connection.js 
+[Client Component Browser]
+    ./node_modules/postgre
+s/src/index.js [Client 
+Component Browser]
+    ./src/db/index.ts 
+[Client Component Browser]
+    ./src/lib/actions.ts 
+[Client Component Browser]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component Browser]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/me
+ssages/module-not-found
+
+
+./node_modules/postgres/sr
+c/connection.js:5:1
+Module not found: Can't 
+resolve 'perf_hooks'
+  [90m3 |[0m 
+[36mimport[0m crypto 
+[36mfrom[0m 
+[32m'crypto'[0m
+  [90m4 |[0m 
+[36mimport[0m 
+[33mStream[0m 
+[36mfrom[0m 
+[32m'stream'[0m
+[31m[1m>[0m [90m5 
+|[0m [36mimport[0m { 
+performance } 
+[36mfrom[0m 
+[32m'perf_hooks'[0m
+  [90m  |[0m [31m[1m^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^[0m
+  [90m6 |[0m
+  [90m7 |[0m 
+[36mimport[0m { 
+stringify, handleValue, 
+arrayParser, 
+arraySerializer } 
+[36mfrom[0m 
+[32m'./types.js'[0m
+  [90m8 |[0m 
+[36mimport[0m { 
+[33mErrors[0m } 
+[36mfrom[0m 
+[32m'./errors.js'[0m
+
+
+
+Import trace:
+  Client Component 
+Browser:
+    ./node_modules/postgre
+s/src/connection.js 
+[Client Component Browser]
+    ./node_modules/postgre
+s/src/index.js [Client 
+Component Browser]
+    ./src/db/index.ts 
+[Client Component Browser]
+    ./src/lib/actions.ts 
+[Client Component Browser]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component Browser]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/me
+ssages/module-not-found
+
+
+./node_modules/postgres/sr
+c/connection.js:2:1
+Module not found: Can't 
+resolve 'tls'
+  [90m1 |[0m 
+[36mimport[0m net 
+[36mfrom[0m 
+[32m'net'[0m
+[31m[1m>[0m [90m2 
+|[0m [36mimport[0m tls 
+[36mfrom[0m 
+[32m'tls'[0m
+  [90m  |[0m [31m[1m^^
+^^^^^^^^^^^^^^^^^^^[0m
+  [90m3 |[0m 
+[36mimport[0m crypto 
+[36mfrom[0m 
+[32m'crypto'[0m
+  [90m4 |[0m 
+[36mimport[0m 
+[33mStream[0m 
+[36mfrom[0m 
+[32m'stream'[0m
+  [90m5 |[0m 
+[36mimport[0m { 
+performance } 
+[36mfrom[0m 
+[32m'perf_hooks'[0m
+
+
+
+Import trace:
+  Client Component 
+Browser:
+    ./node_modules/postgre
+s/src/connection.js 
+[Client Component Browser]
+    ./node_modules/postgre
+s/src/index.js [Client 
+Component Browser]
+    ./src/db/index.ts 
+[Client Component Browser]
+    ./src/lib/actions.ts 
+[Client Component Browser]
+    ./src/components/event
+s/event-form.tsx [Client 
+Component Browser]
+    ./src/components/event
+s/event-form.tsx [Server 
+Component]
+    ./src/app/panitia/even
+ts/[id]/edit/page.tsx 
+[Server Component]
+
+https://nextjs.org/docs/me
+ssages/module-not-found
+
+
+    at <unknown> 
+(./src/lib/actions.ts:5:1)
+    at <unknown> (./src/li
+b/actions.ts:6:10)
+    at <unknown> (https://
+nextjs.org/docs/messages/m
+odule-not-found)
+    at <unknown> (https://
+nextjs.org/docs/messages/m
+odule-not-found)
+    at <unknown> (https://
+nextjs.org/docs/messages/m
+odule-not-found)
+    at <unknown> (https://
+nextjs.org/docs/messages/m
+odule-not-found)
