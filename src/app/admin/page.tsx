@@ -43,34 +43,43 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden shadow-xl">
-           <CardHeader className="pb-4">
-              <div className="h-12 w-12 rounded-2xl bg-primary/20 flex items-center justify-center mb-4">
-                 <Users className="h-6 w-6 text-primary" />
+        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden shadow-xl group">
+           <div className="p-8">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-12 w-12 rounded-2xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                   <Users className="h-6 w-6 text-primary" />
+                </div>
+                <Badge variant="outline" className="font-black text-[10px] tracking-widest px-2 py-0.5 bg-secondary border-primary/20 text-primary">LIVE</Badge>
               </div>
-              <CardTitle className="text-3xl font-black tracking-tighter">{totalUsers}</CardTitle>
-              <CardDescription className="text-xs font-black uppercase tracking-widest text-muted-foreground mt-2">Total Users</CardDescription>
-           </CardHeader>
+              <div className="text-4xl font-black tracking-tighter mb-1">{totalUsers}</div>
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground italic">Total Registered Users</div>
+           </div>
         </Card>
         
-        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden shadow-xl">
-           <CardHeader className="pb-4">
-              <div className="h-12 w-12 rounded-2xl bg-purple-500/20 flex items-center justify-center mb-4">
-                 <CalendarDays className="h-6 w-6 text-purple-500" />
+        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden shadow-xl group">
+           <div className="p-8">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-12 w-12 rounded-2xl bg-purple-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                   <CalendarDays className="h-6 w-6 text-purple-500" />
+                </div>
+                <Badge variant="outline" className="font-black text-[10px] tracking-widest px-2 py-0.5 bg-secondary border-purple-500/20 text-purple-500">LIVE</Badge>
               </div>
-              <CardTitle className="text-3xl font-black tracking-tighter">{totalEvents}</CardTitle>
-              <CardDescription className="text-xs font-black uppercase tracking-widest text-muted-foreground mt-2">Total Events</CardDescription>
-           </CardHeader>
+              <div className="text-4xl font-black tracking-tighter mb-1">{totalEvents}</div>
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground italic">Total Events Hosted</div>
+           </div>
         </Card>
 
-        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden shadow-xl">
-           <CardHeader className="pb-4">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center mb-4">
-                 <UserCheck className="h-6 w-6 text-emerald-500" />
+        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden shadow-xl group">
+           <div className="p-8">
+              <div className="flex items-center justify-between mb-4">
+                <div className="h-12 w-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                   <UserCheck className="h-6 w-6 text-emerald-500" />
+                </div>
+                <Badge variant="outline" className="font-black text-[10px] tracking-widest px-2 py-0.5 bg-secondary border-emerald-500/20 text-emerald-500">LIVE</Badge>
               </div>
-              <CardTitle className="text-3xl font-black tracking-tighter">{totalRegistrations}</CardTitle>
-              <CardDescription className="text-xs font-black uppercase tracking-widest text-muted-foreground mt-2">Total Registrations</CardDescription>
-           </CardHeader>
+              <div className="text-4xl font-black tracking-tighter mb-1">{totalRegistrations}</div>
+              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground italic">Total Event Registrations</div>
+           </div>
         </Card>
       </div>
 

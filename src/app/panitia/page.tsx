@@ -47,7 +47,7 @@ export default async function PanitiaDashboard() {
             { label: "PENDING REVIEW", value: totalPendaftarBaru.toLocaleString(), icon: ClipboardList, trend: "Need Action", isUp: false, color: "text-amber-400" },
           ].map((stat, i) => (
             <Card key={i} className="bg-card/40 backdrop-blur-xl border-border/50 hover:border-primary/50 transition-all duration-500 overflow-hidden group p-1">
-              <div className="bg-secondary p-6 rounded-[calc(var(--radius)-4px)]">
+              <div className="bg-secondary p-8 rounded-[calc(var(--radius)-4px)]">
                   <div className="flex flex-row items-center justify-between space-y-0 pb-4">
                       <CardTitle className="text-[10px] font-black tracking-[0.2em] text-muted-foreground uppercase">{stat.label}</CardTitle>
                       <div className={cn("p-2 rounded-lg bg-secondary group-hover:bg-primary/10 transition-colors", stat.color)}>

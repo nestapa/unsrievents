@@ -52,7 +52,7 @@ export function Navbar() {
         className={cn(
           "container max-w-6xl mx-auto flex h-16 md:h-20 items-center justify-between rounded-3xl px-6 md:px-10 transition-all duration-500",
           isScrolled 
-            ? "bg-card backdrop-blur-2xl border border-border shadow-[0_20px_50px_rgba(0,0,0,0.5)]" 
+            ? "bg-card/80 backdrop-blur-2xl border border-border/50 shadow-sm" 
             : "bg-transparent"
         )}
       >
