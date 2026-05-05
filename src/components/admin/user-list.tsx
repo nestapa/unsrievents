@@ -23,6 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { MoreVertical, Shield, User, Trash2, Loader2, Check } from "lucide-react";
 import { adminUpdateUserRole, adminDeleteUser } from "@/lib/actions";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface UserListProps {
   users: any[];
@@ -59,7 +60,15 @@ export function UserList({ users: initialUsers }: UserListProps) {
   }
 
   return (
-    <div className="rounded-2xl border border-border/50 overflow-hidden bg-card/40 backdrop-blur-xl">
+    <div className="relative rounded-2xl border border-border/50 overflow-hidden bg-card/40 backdrop-blur-xl">
+      {isPending && (
+        <div className="absolute inset-0 z-50 bg-background/20 backdrop-blur-[1px] flex items-center justify-center">
+            <div className="bg-card p-4 rounded-2xl border border-border shadow-2xl flex items-center gap-3">
+                <Loader2 className="h-5 w-5 text-primary animate-spin" />
+                <span className="font-black text-xs tracking-widest uppercase">Processing...</span>
+            </div>
+        </div>
+      )}
       <Table>
         <TableHeader className="bg-secondary">
           <TableRow className="hover:bg-transparent border-border">
@@ -74,12 +83,12 @@ export function UserList({ users: initialUsers }: UserListProps) {
             <TableRow key={u.id} className="group hover:bg-muted transition-colors border-border">
               <TableCell>
                 <div className="flex items-center gap-4">
-                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center font-black text-foreground shadow-lg shrink-0">
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center font-black text-white shadow-lg shrink-0">
                     {u.name?.[0].toUpperCase()}
                   </div>
                   <div className="flex flex-col min-w-0">
-                    <span className="font-black text-sm tracking-tight truncate">{u.name}</span>
-                    <span className="text-[10px] text-muted-foreground font-medium truncate">{u.email}</span>
+                    <span className="font-black text-sm tracking-tight truncate uppercase">{u.name}</span>
+                    <span className="text-[10px] text-muted-foreground font-medium truncate italic">{u.email}</span>
                   </div>
                 </div>
               </TableCell>
@@ -103,32 +112,46 @@ export function UserList({ users: initialUsers }: UserListProps) {
               </TableCell>
               <TableCell className="text-right">
                 <DropdownMenu>
-                  <DropdownMenuTrigger>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted">
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted rounded-lg">
                       <MoreVertical className="h-4 w-4" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-48 bg-card/95 backdrop-blur-xl border-border">
-                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest p-2">Manage Access</DropdownMenuLabel>
+                  <DropdownMenuContent align="end" className="w-56 bg-card/95 backdrop-blur-xl border-border rounded-xl">
+                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest p-3">Manage Access</DropdownMenuLabel>
                     <DropdownMenuSeparator className="bg-secondary" />
-                    <DropdownMenuGroup>
-                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "admin")} className="p-2 cursor-pointer font-bold text-xs gap-2">
-                            <Shield className="h-3.5 w-3.5 text-primary" /> Make Admin
-                            {u.role === "admin" && <Check className="h-3.5 w-3.5 ml-auto text-primary" />}
+                    <DropdownMenuGroup className="p-1">
+                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "admin")} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg">
+                            <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                <Shield className="h-4 w-4 text-primary" />
+                            </div>
+                            <span>Make Admin</span>
+                            {u.role === "admin" && <Check className="h-4 w-4 ml-auto text-primary" />}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "panitia")} className="p-2 cursor-pointer font-bold text-xs gap-2">
-                            <Shield className="h-3.5 w-3.5 text-emerald-400" /> Make Panitia
-                            {u.role === "panitia" && <Check className="h-3.5 w-3.5 ml-auto text-emerald-400" />}
+                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "panitia")} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg">
+                            <div className="h-8 w-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                                <Shield className="h-4 w-4 text-emerald-400" />
+                            </div>
+                            <span>Make Panitia</span>
+                            {u.role === "panitia" && <Check className="h-4 w-4 ml-auto text-emerald-400" />}
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "user")} className="p-2 cursor-pointer font-bold text-xs gap-2">
-                            <User className="h-3.5 w-3.5 text-muted-foreground" /> Make User
-                            {u.role === "user" && <Check className="h-3.5 w-3.5 ml-auto" />}
+                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "user")} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg">
+                            <div className="h-8 w-8 rounded-lg bg-secondary flex items-center justify-center">
+                                <User className="h-4 w-4 text-muted-foreground" />
+                            </div>
+                            <span>Make User</span>
+                            {u.role === "user" && <Check className="h-4 w-4 ml-auto" />}
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator className="bg-secondary" />
-                    <DropdownMenuItem onClick={() => handleDeleteUser(u.id)} className="p-2 cursor-pointer font-bold text-xs gap-2 text-destructive focus:text-destructive">
-                      <Trash2 className="h-3.5 w-3.5" /> Delete User
-                    </DropdownMenuItem>
+                    <div className="p-1">
+                        <DropdownMenuItem onClick={() => handleDeleteUser(u.id)} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg text-destructive focus:text-destructive focus:bg-destructive/10">
+                            <div className="h-8 w-8 rounded-lg bg-destructive/10 flex items-center justify-center">
+                                <Trash2 className="h-4 w-4" />
+                            </div>
+                            <span>Delete User Account</span>
+                        </DropdownMenuItem>
+                    </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
@@ -138,11 +161,9 @@ export function UserList({ users: initialUsers }: UserListProps) {
       </Table>
       {users.length === 0 && (
         <div className="py-20 text-center">
-          <p className="text-muted-foreground font-medium italic">No users found in system.</p>
+          <p className="text-muted-foreground font-black uppercase tracking-widest italic text-xs">No users found in system.</p>
         </div>
       )}
     </div>
   );
 }
-
-import { cn } from "@/lib/utils";
