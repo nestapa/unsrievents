@@ -11,12 +11,14 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { getPanitiaEvents, getPanitiaRegistrations } from "@/lib/actions";
+import { getPanitiaEvents, getPanitiaRegistrations, getPanitiaChartData } from "@/lib/actions";
+import { SimpleAreaChart, SimpleBarChart } from "@/components/dashboard/charts";
 import { CopyButton } from "@/components/copy-button";
 
 export default async function PanitiaDashboard() {
   const myEvents = await getPanitiaEvents();
   const myRegistrations = await getPanitiaRegistrations();
+  const chartData = await getPanitiaChartData();
 
   const totalPeserta = myEvents.reduce((acc: number, e: any) => acc + (e.seats - e.remainingSeats), 0);
   const acaraAktif = myEvents.length;
@@ -63,6 +65,32 @@ export default async function PanitiaDashboard() {
               </div>
             </Card>
           ))}
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <Card className="lg:col-span-2 bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden">
+            <CardHeader className="pb-8">
+              <div className="flex items-center justify-between">
+                 <div>
+                    <CardTitle className="text-2xl font-black tracking-tight uppercase italic">REGISTRATION TRENDS</CardTitle>
+                    <CardDescription className="text-sm font-medium mt-1">Pendaftaran 7 hari terakhir.</CardDescription>
+                 </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+               <SimpleAreaChart data={chartData?.trends || []} color="#10b981" height={200} />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden">
+            <CardHeader className="pb-8">
+               <CardTitle className="text-2xl font-black tracking-tight uppercase italic">EVENT CAPACITY</CardTitle>
+               <CardDescription className="text-sm font-medium mt-1">Status keterisian acara.</CardDescription>
+            </CardHeader>
+            <CardContent>
+               <SimpleBarChart data={chartData?.eventStats || []} dataKey="filled" labelKey="name" height={200} />
+            </CardContent>
+          </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

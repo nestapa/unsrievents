@@ -11,10 +11,12 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getAdminStats } from "@/lib/actions";
+import { getAdminStats, getAdminChartData } from "@/lib/actions";
+import { SimpleAreaChart, SimplePieChart } from "@/components/dashboard/charts";
 
 export default async function AdminDashboard() {
   const stats = await getAdminStats();
+  const chartData = await getAdminChartData();
 
   if (!stats) {
       return (
@@ -69,6 +71,32 @@ export default async function AdminDashboard() {
               <CardTitle className="text-3xl font-black tracking-tighter">{totalRegistrations}</CardTitle>
               <CardDescription className="text-xs font-black uppercase tracking-widest text-muted-foreground mt-2">Total Registrations</CardDescription>
            </CardHeader>
+        </Card>
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-6">
+        <Card className="lg:col-span-2 bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden">
+          <CardHeader className="pb-8">
+            <div className="flex items-center justify-between">
+               <div>
+                  <CardTitle className="text-2xl font-black tracking-tight uppercase italic">SYSTEM GROWTH</CardTitle>
+                  <CardDescription className="text-sm font-medium mt-1">Tren pertumbuhan pengguna baru tahun ini.</CardDescription>
+               </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <SimpleAreaChart data={chartData?.growth || []} color="var(--primary)" height={250} />
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden">
+          <CardHeader className="pb-8">
+             <CardTitle className="text-2xl font-black tracking-tight uppercase italic">CATEGORIES</CardTitle>
+             <CardDescription className="text-sm font-medium mt-1">Distribusi kategori acara.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <SimplePieChart data={chartData?.categories || []} />
+          </CardContent>
         </Card>
       </div>
 

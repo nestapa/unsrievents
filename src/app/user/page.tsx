@@ -15,7 +15,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { getUserRegistrations } from "@/lib/actions";
+import { getUserRegistrations, getUserChartData } from "@/lib/actions";
+import { SimpleAreaChart, SimplePieChart } from "@/components/dashboard/charts";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -30,6 +31,7 @@ export default async function UserDashboard() {
   }
 
   const registrations = await getUserRegistrations();
+  const chartData = await getUserChartData();
   const userName = session.user.name.split(" ")[0].toUpperCase();
   
   const totalJoined = registrations.length;
@@ -81,6 +83,32 @@ export default async function UserDashboard() {
             </div>
           </Card>
         ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <Card className="lg:col-span-2 bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden">
+          <CardHeader className="pb-8">
+            <div className="flex items-center justify-between">
+               <div>
+                  <CardTitle className="text-2xl font-black tracking-tight uppercase italic">ACTIVITY TRENDS</CardTitle>
+                  <CardDescription className="text-sm font-medium mt-1">Intensitas mengikuti acara tahun ini.</CardDescription>
+               </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <SimpleAreaChart data={chartData?.activity || []} color="#a855f7" height={200} />
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card/40 backdrop-blur-xl border-border/50 overflow-hidden">
+          <CardHeader className="pb-8">
+             <CardTitle className="text-2xl font-black tracking-tight uppercase italic">INTERESTS</CardTitle>
+             <CardDescription className="text-sm font-medium mt-1">Kategori acara yang paling diminati.</CardDescription>
+          </CardHeader>
+          <CardContent>
+             <SimplePieChart data={chartData?.categories || []} />
+          </CardContent>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { events, registrations, user } from "@/db/schema";
-import { desc, eq, and, count } from "drizzle-orm";
+import { desc, eq, and, count, sql } from "drizzle-orm";
 import { auth } from "./auth";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
@@ -558,6 +558,152 @@ export async function getAdminRegistrations() {
         return [];
     }
 }
+export async function getAdminChartData() {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
 
+    if (!session || session.user.role !== "admin") {
+        return null;
+    }
 
+    try {
+        const allUsers = await db.query.user.findMany({
+            columns: { createdAt: true }
+        });
+        const allEvents = await db.query.events.findMany({
+            columns: { createdAt: true }
+        });
 
+        // Group by month
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const currentYear = new Date().getFullYear();
+        
+        const userData = months.map((month, i) => {
+            const count = allUsers.filter(u => {
+                const date = new Date(u.createdAt);
+                return date.getMonth() === i && date.getFullYear() === currentYear;
+            }).length;
+            return { name: month, value: count };
+        });
+
+        const eventData = months.map((month, i) => {
+            const count = allEvents.filter(e => {
+                const date = new Date(e.createdAt!);
+                return date.getMonth() === i && date.getFullYear() === currentYear;
+            }).length;
+            return { name: month, value: count };
+        });
+
+        const categoryData = await db.select({
+            category: events.category,
+            count: count()
+        }).from(events).groupBy(events.category);
+
+        return {
+            growth: userData,
+            events: eventData,
+            categories: categoryData.map(c => ({ name: c.category, value: c.count }))
+        };
+    } catch (error) {
+        console.error("Error fetching admin chart data:", error);
+        return null;
+    }
+}
+
+export async function getPanitiaChartData() {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    if (!session || (session.user.role !== "panitia" && session.user.role !== "admin")) {
+        return null;
+    }
+
+    try {
+        const myEvents = await db.query.events.findMany({
+            where: eq(events.organizerId, session.user.id),
+            with: {
+                registrations: true
+            }
+        });
+
+        // Registration trends over last 7 days
+        const last7Days = Array.from({ length: 7 }, (_, i) => {
+            const d = new Date();
+            d.setDate(d.getDate() - i);
+            return d.toISOString().split('T')[0];
+        }).reverse();
+
+        const trends = last7Days.map(day => {
+            let count = 0;
+            myEvents.forEach(event => {
+                count += event.registrations.filter(r => 
+                    new Date(r.registeredAt!).toISOString().split('T')[0] === day
+                ).length;
+            });
+            return { name: day.split('-').slice(1).join('/'), value: count };
+        });
+
+        // Event capacity vs registrations
+        const eventStats = myEvents.map(e => ({
+            name: e.title.length > 10 ? e.title.substring(0, 10) + '...' : e.title,
+            capacity: e.seats,
+            filled: e.seats - e.remainingSeats
+        }));
+
+        return {
+            trends,
+            eventStats
+        };
+    } catch (error) {
+        console.error("Error fetching panitia chart data:", error);
+        return null;
+    }
+}
+
+export async function getUserChartData() {
+    const session = await auth.api.getSession({
+        headers: await headers(),
+    });
+
+    if (!session) return null;
+
+    try {
+        const regs = await db.query.registrations.findMany({
+            where: eq(registrations.userId, session.user.id),
+            with: {
+                event: true
+            }
+        });
+
+        // Events joined by category
+        const categories: Record<string, number> = {};
+        regs.forEach(r => {
+            const cat = r.event.category;
+            categories[cat] = (categories[cat] || 0) + 1;
+        });
+
+        const categoryData = Object.entries(categories).map(([name, value]) => ({ name, value }));
+
+        // Activity over months
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const currentYear = new Date().getFullYear();
+        
+        const activity = months.map((month, i) => {
+            const count = regs.filter(r => {
+                const date = new Date(r.registeredAt!);
+                return date.getMonth() === i && date.getFullYear() === currentYear;
+            }).length;
+            return { name: month, value: count };
+        });
+
+        return {
+            categories: categoryData,
+            activity
+        };
+    } catch (error) {
+        console.error("Error fetching user chart data:", error);
+        return null;
+    }
+}
