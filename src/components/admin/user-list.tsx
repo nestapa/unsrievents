@@ -111,49 +111,54 @@ export function UserList({ users: initialUsers }: UserListProps) {
                 </span>
               </TableCell>
               <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-8 w-8 hover:bg-muted rounded-lg">
-                      <MoreVertical className="h-4 w-4" />
+                <div className="flex items-center justify-end gap-1.5">
+                    <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => handleUpdateRole(u.id, "admin")}
+                        className={cn(
+                            "h-8 w-8 transition-all duration-300",
+                            u.role === "admin" ? "bg-primary/20 text-primary border-primary/20" : "hover:bg-primary/10 hover:text-primary text-muted-foreground"
+                        )}
+                        title="Set Admin"
+                    >
+                        <Shield className="h-4 w-4" />
                     </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56 bg-card/95 backdrop-blur-xl border-border rounded-xl">
-                    <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-widest p-3">Manage Access</DropdownMenuLabel>
-                    <DropdownMenuSeparator className="bg-secondary" />
-                    <DropdownMenuGroup className="p-1">
-                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "admin")} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg">
-                            <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                                <Shield className="h-4 w-4 text-primary" />
-                            </div>
-                            <span>Make Admin</span>
-                            {u.role === "admin" && <Check className="h-4 w-4 ml-auto text-primary" />}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "panitia")} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg">
-                            <div className="h-8 w-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                                <Shield className="h-4 w-4 text-emerald-400" />
-                            </div>
-                            <span>Make Panitia</span>
-                            {u.role === "panitia" && <Check className="h-4 w-4 ml-auto text-emerald-400" />}
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleUpdateRole(u.id, "user")} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg">
-                            <div className="h-8 w-8 rounded-lg bg-secondary flex items-center justify-center">
-                                <User className="h-4 w-4 text-muted-foreground" />
-                            </div>
-                            <span>Make User</span>
-                            {u.role === "user" && <Check className="h-4 w-4 ml-auto" />}
-                        </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                    <DropdownMenuSeparator className="bg-secondary" />
-                    <div className="p-1">
-                        <DropdownMenuItem onClick={() => handleDeleteUser(u.id)} className="p-3 cursor-pointer font-bold text-xs gap-3 rounded-lg text-destructive focus:text-destructive focus:bg-destructive/10">
-                            <div className="h-8 w-8 rounded-lg bg-destructive/10 flex items-center justify-center">
-                                <Trash2 className="h-4 w-4" />
-                            </div>
-                            <span>Delete User Account</span>
-                        </DropdownMenuItem>
-                    </div>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                    <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => handleUpdateRole(u.id, "panitia")}
+                        className={cn(
+                            "h-8 w-8 transition-all duration-300",
+                            u.role === "panitia" ? "bg-emerald-500/20 text-emerald-400 border-emerald-400/20" : "hover:bg-emerald-500/10 hover:text-emerald-400 text-muted-foreground"
+                        )}
+                        title="Set Panitia"
+                    >
+                        <Shield className="h-4 w-4" />
+                    </Button>
+                    <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => handleUpdateRole(u.id, "user")}
+                        className={cn(
+                            "h-8 w-8 transition-all duration-300",
+                            u.role === "user" ? "bg-secondary text-foreground border-border" : "hover:bg-secondary hover:text-foreground text-muted-foreground"
+                        )}
+                        title="Set User"
+                    >
+                        <User className="h-4 w-4" />
+                    </Button>
+                    <div className="w-[1px] h-4 bg-border mx-1" />
+                    <Button 
+                        variant="outline" 
+                        size="icon" 
+                        onClick={() => handleDeleteUser(u.id)}
+                        className="h-8 w-8 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all text-muted-foreground"
+                        title="Delete User"
+                    >
+                        <Trash2 className="h-4 w-4" />
+                    </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
