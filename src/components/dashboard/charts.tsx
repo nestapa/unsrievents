@@ -88,7 +88,13 @@ const defaultOptions: ChartOptions<any> = {
 };
 
 export function SimpleAreaChart({ data, color = "#3b82f6", height = 300 }: { data: ChartData[], color?: string, height?: number }) {
-  if (!data || data.length === 0) return <div className="h-full flex items-center justify-center text-muted-foreground italic text-xs">No data</div>;
+  const [mounted, setMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !data || data.length === 0) return <div style={{ height }} className="flex items-center justify-center text-muted-foreground italic text-xs">Loading...</div>;
 
   const chartData = {
     labels: data.map((d) => d.name),
@@ -97,17 +103,18 @@ export function SimpleAreaChart({ data, color = "#3b82f6", height = 300 }: { dat
         fill: true,
         label: "Value",
         data: data.map((d) => d.value),
-        borderColor: color,
+        borderColor: color.includes('var') ? "#3b82f6" : color,
         backgroundColor: (context: any) => {
           const ctx = context.chart.ctx;
           const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-          gradient.addColorStop(0, `${color}44`);
-          gradient.addColorStop(1, `${color}00`);
+          const baseColor = color.includes('var') ? "#3b82f6" : color;
+          gradient.addColorStop(0, `${baseColor}44`);
+          gradient.addColorStop(1, `${baseColor}00`);
           return gradient;
         },
         tension: 0.4,
         pointRadius: 4,
-        pointBackgroundColor: color,
+        pointBackgroundColor: color.includes('var') ? "#3b82f6" : color,
         pointBorderColor: "#fff",
         pointHoverRadius: 6,
       },
@@ -122,7 +129,13 @@ export function SimpleAreaChart({ data, color = "#3b82f6", height = 300 }: { dat
 }
 
 export function SimpleBarChart({ data, height = 300, dataKey = "value", labelKey = "name" }: any) {
-  if (!data || data.length === 0) return <div className="h-full flex items-center justify-center text-muted-foreground italic text-xs">No data</div>;
+  const [mounted, setMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !data || data.length === 0) return <div style={{ height }} className="flex items-center justify-center text-muted-foreground italic text-xs">Loading...</div>;
 
   const chartData = {
     labels: data.map((d: any) => d[labelKey]),
@@ -151,7 +164,13 @@ export function SimpleBarChart({ data, height = 300, dataKey = "value", labelKey
 }
 
 export function SimplePieChart({ data }: { data: ChartData[] }) {
-  if (!data || data.length === 0) return <div className="h-full flex items-center justify-center text-muted-foreground italic text-xs">No data</div>;
+  const [mounted, setMounted] = React.useState(false);
+  
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted || !data || data.length === 0) return <div className="h-[300px] flex items-center justify-center text-muted-foreground italic text-xs">Loading...</div>;
 
   const colors = ["#3b82f6", "#a855f7", "#10b981", "#f59e0b", "#ef4444"];
   

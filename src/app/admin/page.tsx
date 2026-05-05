@@ -85,7 +85,7 @@ export default async function AdminDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <SimpleAreaChart data={chartData?.growth || []} color="var(--primary)" height={250} />
+            <SimpleAreaChart data={chartData?.growth || []} color="#3b82f6" height={250} />
           </CardContent>
         </Card>
 
